@@ -29,4 +29,16 @@ class Nim():
             for j in range(1, pile + 1):
                 actions.add((i, j))
         return actions
+    @classmethod
+    def other_player(cls, player):
+        """
+        Nim.other_player(player) returns the player that is not
+        `player`. Assumes `player` is either 0 or 1.
+        """
+        return 0 if player == 1 else 1
+    def switch_player(self):
+        """
+        Switch the current player to the other player.
+        """
+        self.player = Nim.other_player(self.player)
 c = Nim()
