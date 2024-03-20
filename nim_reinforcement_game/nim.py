@@ -114,18 +114,20 @@ class NimAI():
         """
         Update the Q-value for the state `state` and the action `action`
         given the previous Q-value `old_q`, a current reward `reward`,
-        and an estiamte of future rewards `future_rewards`.
+        and an estimate of future rewards `future_rewards`.
 
         Use the formula:
 
         Q(s, a) <- old value estimate
-                   + alpha * (new value estimate - old value estimate)
+                + alpha * (new value estimate - old value estimate)
 
         where `old value estimate` is the previous Q-value,
         `alpha` is the learning rate, and `new value estimate`
         is the sum of the current reward and estimated future rewards.
         """
-        raise NotImplementedError
+        state_action_pair = (tuple(state), action)
+        new_q = old_q + self.alpha * (reward + future_rewards - old_q)
+        self.q[state_action_pair] = new_q
 
     def best_future_reward(self, state):
         """
