@@ -29,22 +29,27 @@ class NeuralNetwork:
         self.test_loss = []
 
 
-        def forward(self, X):
-            """
-            Perform forward propagation.
+    def forward(self, X):
+        """
+        Perform forward propagation.
 
-            Parameters:
-            -----------
-            X: numpy array
-                The input data
+        Parameters:
+        -----------
+        X: numpy array
+            The input data
 
-            Returns:
-            --------
-            numpy array
-                The predicted output
-            """
-            # Perform forward propagation
-            self.z1 = np.dot(X, self.weights1) + self.bias1
-            self.a1 = self.sigmoid(self.z1)
-            self.z2 = np.dot(self.z1, self.weights2)
+        Returns:
+        --------
+        numpy array
+            The predicted output
+        """
+        # Perform forward propagation
+        self.z1 = np.dot(X, self.weights1) + self.bias1
+        self.a1 = self.sigmoid(self.z1)
+        self.z2 = np.dot(self.z1, self.weights2)
+        self.a2 = self.sigmoid(self.z2)
+        if self.loss_func == 'categorical_crossentropy':
+            self.a2 = self.softmax(self.z2)
+        else:
             self.a2 = self.sigmoid(self.z2)
+        return self.a2
