@@ -90,3 +90,35 @@ class NeuralNetwork:
         self.bias2 -= learning_rate * self.db2
         self.weights1 -= learning_rate * self.dw1
         self.bias1 -= learning_rate * self.db1
+
+    def sigmoid(self, x):
+        """
+        Sigmoid activation function.
+
+        Parameters:
+        -----------
+        x: numpy array
+            The input data
+
+        Returns:
+        --------
+        numpy array
+            The output of the sigmoid function
+        """
+        return 1 / (1 + np.exp(-x))
+
+    def sigmoid_derivative(self, x):
+        """
+        Derivative of the sigmoid activation function.
+
+        Parameters:
+        -----------
+        x: numpy array
+            The input data
+
+        Returns:
+        --------
+        numpy array
+            The output of the derivative of the sigmoid function
+        """
+        return x * (1 - x)
