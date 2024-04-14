@@ -122,3 +122,19 @@ class NeuralNetwork:
             The output of the derivative of the sigmoid function
         """
         return x * (1 - x)
+    def softmax(self, x):
+        """
+        Softmax activation function.
+
+        Parameters:
+        -----------
+        x: numpy array
+            The input data
+
+        Returns:
+        --------
+        numpy array
+            The output of the softmax function
+        """
+        exps = np.exp(x - np.max(x, axis=1, keepdims=True))
+        return exps/np.sum(exps, axis=1, keepdims=True)
