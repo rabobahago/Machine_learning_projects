@@ -53,3 +53,40 @@ class NeuralNetwork:
         else:
             self.a2 = self.sigmoid(self.z2)
         return self.a2
+    def backward(self, X, y, learning_rate):
+        """
+        Perform backpropagation.
+
+        Parameters:
+        -----------
+        X: numpy array
+            The input data
+        y: numpy array
+            The target output
+        learning_rate: float
+            The learning rate
+        """
+        # Perform backpropagation
+        m = X.shape[0]
+
+        # Calculate gradients
+        if self.loss_func == 'mse':
+            self.dz2 = self.a2 - y
+        elif self.loss_func == 'log_loss':
+            self.dz2 = -(y/self.a2 - (1-y)/(1-self.a2))
+        elif self.loss_func == 'categorical_crossentropy':
+            self.dz2 = self.a2 - y
+        else:
+            raise ValueError('Invalid loss function')
+
+        self.dw2 = (1 / m) * np.dot(self.a1.T, self.dz2)
+        self.db2 = (1 / m) * np.sum(self.dz2, axis=0, keepdims=True)
+        self.dz1 = np.dot(self.dz2, self.weights2.T) * self.sigmoid_derivative(self.a1)
+        self.dw1 = (1 / m) * np.dot(X.T, self.dz1)
+        self.db1 = (1 / m) * np.sum(self.dz1, axis=0, keepdims=True)
+
+        # Update weights and biases
+        self.weights2 -= learning_rate * self.dw2
+        self.bias2 -= learning_rate * self.db2
+        self.weights1 -= learning_rate * self.dw1
+        self.bias1 -= learning_rate * self.db1
