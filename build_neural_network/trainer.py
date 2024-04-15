@@ -1,3 +1,4 @@
+import numpy as np
 class Trainer:
     """
     A class to train a neural network.
